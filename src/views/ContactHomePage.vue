@@ -10,7 +10,7 @@ const goToSignIn = () => {
     router.push({ name: "contact.signin" });
 }
 const goToSignUp = () => {
-    router.push({ name: "contact.signin" });
+    router.push({ name: "contact.signup" });
 }
 </script>
 

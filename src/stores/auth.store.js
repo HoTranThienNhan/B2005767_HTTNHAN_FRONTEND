@@ -19,6 +19,7 @@ export const useAuthStore = defineStore({
                     // update pinia state
                     this.user = signedInUser;
 
+                    // clear old local storage
                     localStorage.clear();
 
                     // store user details in local storage to keep user logged in between page refreshes

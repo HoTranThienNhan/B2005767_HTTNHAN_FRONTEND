@@ -51,6 +51,13 @@ const signout = async () => {
                 </router-link>
             </li>
 
+            <li v-if="!user" class="nav-item">
+                <router-link :to="{ name: 'contact.signup' }" class="nav-link">
+                    Đăng Ký
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                </router-link>
+            </li>
+
         </div>
     </nav>
 </template>
