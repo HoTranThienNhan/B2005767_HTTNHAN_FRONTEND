@@ -13,6 +13,8 @@
 <script>
 import ContactForm from "@/components/ContactForm.vue";
 import ContactService from "@/services/contact.service";
+import { useAuthStore } from '@/stores/auth.store';
+import { ref } from 'vue';
 
 export default {
     components: {
@@ -25,6 +27,7 @@ export default {
         return {
             contact: null,
             message: "",
+            user: [],
         };
     },
     methods: {
@@ -63,10 +66,28 @@ export default {
                 }
             }
         },
+
+        getAuthStore() {
+            const authStore = useAuthStore();
+            this.user = ref(authStore?.user);
+
+            if (!this.user) {
+                // Chuyển sang trang NotFound đồng thời giữ cho URL không đổi
+                this.$router.push({
+                    name: "notfound",
+                    params: {
+                        pathMatch: this.$route.path.split("/").slice(1)
+                    },
+                    query: this.$route.query,
+                    hash: this.$route.hash,
+                });
+            }
+        },
     },
     created() {
         this.getContact(this.id);
         this.message = "";
+        this.getAuthStore();
     },
 };
 </script>

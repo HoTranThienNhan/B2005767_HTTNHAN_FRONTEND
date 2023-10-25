@@ -32,15 +32,12 @@
                     <i class="fas fa-address-card"></i>
                 </h4>
                 <ContactCard :contact="activeContact" />
-                <router-link
-                    :to="{
-                        name: 'contact.edit',
-                        params: { id: activeContact._id },
-                    }"
-                >
+                <router-link :to="{
+                    name: 'contact.edit',
+                    params: { id: activeContact._id },
+                }">
                     <span class="mt-2 badge badge-warning">
-                        <i class="fas fa-edit"></i> Hiệu chỉnh</span
-                    >
+                        <i class="fas fa-edit"></i> Hiệu chỉnh</span>
                 </router-link>
             </div>
         </div>
@@ -52,6 +49,8 @@ import ContactCard from "@/components/ContactCard.vue";
 import InputSearch from "@/components/InputSearch.vue";
 import ContactList from "@/components/ContactList.vue";
 import ContactService from "@/services/contact.service";
+import { useAuthStore } from '@/stores/auth.store';
+import { ref } from 'vue';
 
 export default {
     components: {
@@ -64,6 +63,7 @@ export default {
             contacts: [],
             activeIndex: -1,
             searchText: "",
+            user: [],
         };
     },
     watch: {
@@ -95,6 +95,7 @@ export default {
         filteredContactsCount() {
             return this.filteredContacts.length;
         },
+
     },
     methods: {
         async retrieveContacts() {
@@ -121,9 +122,29 @@ export default {
         goToAddContact() {
             this.$router.push({ name: "contact.add" });
         },
+
+        getAuthStore() {
+            const authStore = useAuthStore();
+            this.user = ref(authStore?.user);
+
+            if (!this.user) {
+                // Chuyển sang trang NotFound đồng thời giữ cho URL không đổi
+                this.$router.push({
+                    name: "notfound",
+                    params: {
+                        pathMatch: this.$route.path.split("/").slice(1)
+                    },
+                    query: this.$route.query,
+                    hash: this.$route.hash,
+                });
+            }
+        },
     },
     mounted() {
         this.refreshList();
+    },
+    created() {
+        this.getAuthStore();
     },
 };
 </script>
