@@ -12,6 +12,8 @@ const signup = async (data) => {
     try {
         await UserService.signup(data);
         // message.value = "Đăng ký thành công.";
+        alert("Đăng ký thành công");
+
         router.push({ name: "contact.signin" });
     } catch (error) {
         message.value = error?.response?.data?.message;

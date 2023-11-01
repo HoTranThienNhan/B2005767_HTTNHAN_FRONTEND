@@ -15,6 +15,8 @@ const signin = async (data) => {
         await authStore.signinStore(data);
 
         await UserService.signin(data);
+
+        alert("Đăng nhập thành công");
         // message.value = "Đăng nhập thành công.";
     } catch (error) {
         message.value = error?.response?.data?.message;

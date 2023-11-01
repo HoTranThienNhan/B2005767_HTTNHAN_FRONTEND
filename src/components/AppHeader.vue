@@ -16,7 +16,6 @@ watch(
 
 const signout = async () => {
     await authStore.signoutStore();
-
 }
 </script>
 
@@ -40,7 +39,7 @@ const signout = async () => {
             <li v-if="user" class="nav-item">
                 <span v-on:click="signout" class="nav-link cursor-pointer">
                     Đăng Xuất
-                    <i class="fa fa-sign-in" aria-hidden="true"></i>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
                 </span>
             </li>
 

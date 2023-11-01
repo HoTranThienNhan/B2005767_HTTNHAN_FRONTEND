@@ -1,11 +1,7 @@
 <template>
     <div v-if="contact" class="page">
         <h4>Hiệu chỉnh Liên hệ</h4>
-        <ContactForm 
-            :contact="contact" 
-            @submit:contact="updateContact" 
-            @delete:contact="deleteContact" 
-        />
+        <ContactForm :contact="contact" @submit:contact="updateContact" @delete:contact="deleteContact" />
         <p>{{ message }}</p>
     </div>
 </template>
@@ -49,8 +45,13 @@ export default {
         },
         async updateContact(data) {
             try {
-                await ContactService.update(this.contact._id, data);
-                this.message = "Liên hệ được cập nhật thành công.";
+                const answer = window.confirm("Bạn chắc chắn muốn cập nhật liên hệ này?");
+                if (answer) {
+                    await ContactService.update(this.contact._id, data);
+                    this.message = "Liên hệ được cập nhật thành công.";
+                } else {
+                    return false;
+                }
             } catch (error) {
                 console.log(error);
             }

@@ -33,9 +33,15 @@ export const useAuthStore = defineStore({
             }
         },
         signoutStore() {
-            this.user = null;
-            localStorage.removeItem('user');
-            router.push({ name: "contact.signin" });
+            const answer = window.confirm("Bạn chắc chắn muốn đăng xuất khỏi ứng dụng?");
+            if (answer) {
+                this.user = null;
+                localStorage.removeItem('user');
+                alert("Đăng xuất thành công");
+                router.push({ name: "contact.signin" });
+            } else {
+                return false;
+            }
         }
     },
     persist: true,

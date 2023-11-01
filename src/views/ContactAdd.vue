@@ -29,8 +29,13 @@ export default {
     methods: {
         async addContact(data) {
             try {
-                await ContactService.create(data);
-                this.message = "Liên hệ được tạo thành công.";
+                const answer = window.confirm("Bạn chắc chắn muốn thêm liên hệ này?");
+                if (answer) {
+                    await ContactService.create(data);
+                    this.message = "Liên hệ được thêm thành công.";
+                } else {
+                    return false;
+                }
             } catch (error) {
                 console.log(error);
             }
